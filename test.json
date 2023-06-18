@@ -1,0 +1,15 @@
+{
+    "data": [
+      {
+        "ID": 1,
+        "kuliyyahID": "KICT",
+        "programID": "VRIQTae_IcLyLwla",
+        "programDuration": 3,
+        "estimatedBudget": 10000,
+        "programDate": "2023-07-19T00:00:00.000Z",
+        "approvedStatus": "NO",
+        "fundAllocated": null,
+        "programName": "IBADAH CAMP KICT"
+      }
+    ]
+  }

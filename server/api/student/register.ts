@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
         emailAddress: body['emailAddress'],
         phoneNumber: body['phoneNumber'],
         kuliyyah: body['kuliyyah'],
+        programID: body['programID']
     }
 
     const result = await sql`

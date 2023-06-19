@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const result = await sql`
         DELETE FROM public."Program_Registration" r
-        WHERE r."ID" = ${body['programID']}
+        WHERE r."programID" = ${body['programID']}
     `
     
     return {

@@ -5,10 +5,13 @@ import { nanoid } from 'nanoid'
 export default defineEventHandler(async (event) => {
 
     const result = await sql`
-        select r."programID", r."programName", r."programDuration", r."estimatedBudget", r."programDate", r."approvedStatus", r."fundAllocated", r."kulliyyahNickname" 
+        select r."programID", r."programName", r."programDuration", r."estimatedBudget", r."programDate", r."approvedStatus", r."fundAllocated", r."kulliyyahNickname", COUNT(f."programID") as "feedbackCount"
         from "Program_Registration" r
         INNER JOIN "Kuliyyah" k
         ON k."kuliyyah_code" = r."kulliyyahNickname"
+        LEFT JOIN public."StudentFeedback" f
+        ON f."programID" = r."programID"
+        GROUP BY f."programID", r."programID"
     `
 
     console.log(result);

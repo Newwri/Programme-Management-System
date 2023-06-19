@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-blue-100 w-full py-3 px-4 rounded-lg h-36 flex mb-6">
+    <div class="bg-blue-100 w-full py-3 px-4 rounded-lg flex mb-6">
         <div class="flex flex-col flex-grow">
             <div class="flex flex-col grow">
                 <h1 class="font-bold text-2xl">{{ programName }}</h1>
@@ -7,6 +7,7 @@
                 <p class="text-sm">{{ new Date(date).toLocaleDateString() }}</p>
             </div>
             <p class="text-sm">{{ kuliyyah }}</p>
+            <p class="mt-4">Total students joined: {{ totalStudents }}</p>
         </div>
         <div>
             <button
@@ -19,5 +20,5 @@
 </template>
 
 <script setup>
-defineProps(['programName', 'programID', 'kuliyyah', 'click', 'programDuration', 'date']);
+defineProps(['programName', 'programID', 'kuliyyah', 'click', 'programDuration', 'date', 'totalStudents']);
 </script>

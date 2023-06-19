@@ -17,25 +17,25 @@
         <div class="flex w-full gap-x-8 px-8">
             <div class="flex flex-col w-1/2 gap-y-1 items-center mt-6">
                 <StudentCard v-for="item in programListData" :programName="item['programName']"
-                    :kuliyyah="item['kuliyyah_name']" :programID="item['ID']" :click="openModal"
-                    :programDuration="item['programDuration']" :date="item['programDate']" />
+                    :kuliyyah="item['kuliyyah_name']" :programID="item['ID']" :click="() => openModal(item['programID'])"
+                    :programDuration="item['programDuration']" :date="item['programDate']" :totalStudents="item['totalStudents']" />
             </div>
             <div class="flex flex-col w-1/2 gap-y-1 items-center mt-6">
-                
+
                 <h1 class="text-xl font-bold w-full">
                     Registered Students
                 </h1>
 
                 <div class="flex flex-col gap-y-3 w-full">
-                    <RegisteredStudentList 
-                        v-for="item in studentList" 
-                        :name="item['studentName']"
-                        :matricNumber="item['matricNo']"
-                        :kuliyyah="item['kuliyyah_name']"
-                    />
+                    <RegisteredStudentList v-for="item in studentList" :name="item['studentName']"
+                        :matricNumber="item['matricNo']" :kuliyyah="item['kuliyyah_name']" :feedbackID="item['feedbackID']"
+                        :programName="item['programName']"
+                        :programID="item['programID']"
+                        :feedbackClick="submitFeedback" />
                 </div>
 
-                <div class="text-sm py-6 my-2 flex justify-center rounded-lg bg-slate-100 w-full" v-if="studentList.length === 0">
+                <div class="text-sm py-6 my-2 flex justify-center rounded-lg bg-slate-100 w-full"
+                    v-if="studentList.length === 0">
                     There are no students registered yet!
                 </div>
             </div>
@@ -68,8 +68,8 @@
                                             placeholder="2111234" required>
                                     </div>
                                     <div class="mb-2">
-                                        <label for="full-name"
-                                            class="block mb-2 text-sm font-medium text-gray-900">Full Name</label>
+                                        <label for="full-name" class="block mb-2 text-sm font-medium text-gray-900">Full
+                                            Name</label>
                                         <input type="text" id="full-name" v-model="fullName"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                             placeholder="Arman bin Nuri" required>
@@ -130,6 +130,8 @@ console.log(error);
 
 const isOpen = ref(false)
 
+const currentProgramme = ref('')
+
 const matricNumber = ref('')
 const fullName = ref('')
 const emailAddress = ref('')
@@ -139,8 +141,10 @@ const kuliyyah = ref('')
 function closeModal() {
     isOpen.value = false
 }
-function openModal() {
+function openModal(programID) {
     isOpen.value = true
+    currentProgramme.value = programID
+    console.log(programID);
 }
 
 async function registerStudent() {
@@ -152,6 +156,7 @@ async function registerStudent() {
             emailAddress: emailAddress.value,
             phoneNumber: phoneNumber.value,
             kuliyyah: kuliyyah.value,
+            programID: currentProgramme.value,
         },
         method: 'POST'
     })
@@ -163,10 +168,28 @@ async function registerStudent() {
     kuliyyah.value = ''
 
     // console.log(error);
-
+    await refresh()
     await studentRefresh()
 
     closeModal()
+
+}
+
+async function submitFeedback(matricNumber, rating, feedback, programID) {
+
+    const { error } = await useFetch('/api/student/feedback', {
+        body: {
+            matricNumber,
+            rating,
+            feedback,
+            programID
+        },
+        method: 'POST'
+    })
+
+    console.log(error)
+
+    await studentRefresh()
 
 }
 

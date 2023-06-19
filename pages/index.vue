@@ -27,7 +27,9 @@
             <h2 class="text-xl font-bold mb-3">Group Members</h2>
             <ul>
                 <li>2119279 Arman Nuri Anuar</li>
-                <li>2118228 Alya Qasrina</li>
+                <li>2118228 Nooralya Qasrina binti Zuraimi</li>
+                <li>1910829 Muhammad Afiq bin Mohd Ara</li>
+                <li>2016485 Benjamin Irfan bin Mohd Ilahi</li>
             </ul>
         </div>
     </div>

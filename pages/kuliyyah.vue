@@ -30,7 +30,9 @@
                 :programName="item['programName']" 
                 :kuliyyah="item['kuliyyah_name']"
                 :status="item['approvedStatus']"
-                :deleteProgram="() => deleteProgram(item['ID'])"
+                :deleteProgram="() => deleteProgram(item['programID'])"
+                :programID="item['programID']"
+                :feedbackCount="item['feedbackCount']"
             />
         </div>
 
@@ -136,7 +138,6 @@ const programName = ref('')
 const duration = ref(0)
 const budget = ref(0.00)
 const programDate = ref(new Date())
-const programsArr = useState('programs', () => [])
 
 const { data: kuliyyahData } = await useFetch('/api/kuliyyah')
 const { data: programListData, refresh } = await useFetch('/api/program/list')
@@ -179,6 +180,8 @@ async function registerProgram() {
         },
         method: 'POST'
     })
+
+    console.log(error);
 
     await refresh()
     closeModal()
